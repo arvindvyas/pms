@@ -11,4 +11,8 @@ class User < ApplicationRecord
     self.role ||= :user
   end
 
+  def self.developers
+    User.where(role: 'developer')
+  end
+
 end

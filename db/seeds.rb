@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+## create developers
+
+(1..10).each do |i|
+  User.create!(email: "developer#{i}@gmail.com", role: 'developer', password: 'password', password_confirmation: 'password')
+end
+puts "developer created"
