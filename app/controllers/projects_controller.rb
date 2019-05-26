@@ -1,6 +1,8 @@
 class ProjectsController < ApplicationController
   load_and_authorize_resource
   before_action :set_project, only: [:show, :edit, :update, :destroy]
+  skip_authorize_resource :only => :dashboard
+
 
   # GET /projects
   # GET /projects.json
@@ -60,6 +62,10 @@ class ProjectsController < ApplicationController
       format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def dashboard
+    @projects = current_user.projects
   end
 
   private

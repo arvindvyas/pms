@@ -1,0 +1,35 @@
+
+<!-- we can also use cancan here to manage -->
+<%- if current_user.role == 'admin'%>
+  New
+  <%=display_standard_table(User.all.as_json, User.all)%>
+  Progress
+  <%=display_standard_table(User.all.as_json, User.all, 'Progress')%>
+  Done
+  <%=display_standard_table(User.all.as_json, User.all,'Done')%>
+
+
+
+
+	Project Wise Report
+
+	New
+	<%=display_project_table(Project.all.as_json, Project.all)%>
+	Progress
+	<%=display_project_table(Project.all.as_json,Project.all, 'Progress')%>
+	Done
+	<%=display_project_table(Project.all.as_json, Project.all,'Done')%>
+
+
+<%else%>
+
+New
+  <%=display_standard_table([current_user.as_json], [current_user])%>
+  Progress
+  <%=display_standard_table([current_user.as_json],[current_user], 'Progress')%>
+  Done
+  <%=display_standard_table([current_user.as_json], [current_user],'Done')%>
+
+<%end%>
+
+

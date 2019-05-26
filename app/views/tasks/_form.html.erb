@@ -32,12 +32,13 @@
 
   </div>
 
+ <%- if current_user.role != 'developer'%>
   <div class="field">
     <%= form.label :developer %>
     <%= form.select :owner_id,User.developers.pluck(:email,:id),{prompt:'select'}%>
 
   </div>
-
+ <%end%>
   <div class="actions">
     <%= form.submit %>
   </div>
