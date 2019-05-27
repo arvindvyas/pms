@@ -1,0 +1,70 @@
+
+<!-- we can also use cancan here to manage -->
+<%- if current_user.role == 'admin'%>
+  New
+  <%=display_standard_table(User.all.as_json, User.includes(:tasks).all)%>
+  <%=display_standard_table(User.all.as_json, User.all.includes(:tasks), 'Progress')%>
+  Done
+  <%=display_standard_table(User.all.as_json, User.all.includes(:tasks),'Done')%>
+ 
+
+	Project Wise Report
+
+	New
+	<%=display_project_table(Project.all.as_json, Project.all)%>
+	Progress
+	<%=display_project_table(Project.all.as_json,Project.all, 'Progress')%>
+	Done
+	<%=display_project_table(Project.all.as_json, Project.all,'Done')%> 
+
+	  <!--Div that will hold the pie chart-->
+<div>
+  <div>Select the project from select box to view the pie chart between status and its count for that project </div>
+  <div class="project-select">
+    <%= label_tag "project_id", "Select Project" %>:
+    <%= select_tag "project_id" , options_for_select(@projects.collect{|p| [p.name, p.id]}, selected: params[:project]) %>
+  </div>
+  <div id="chart_div"></div>
+  <%= link_to 'New Project', new_project_path %>
+</div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+      // Create the data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Topping');
+      data.addColumn('number', 'Slices');
+      data.addRows(<%= raw @graph_data %>);
+      // Set chart options
+      var options = {'title':'Project wise Pie Chart',
+                     'width':400,
+                     'height':300};
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+    $('#project_id').change(function(){
+      window.location.href = window.location.href.split('?')[0] + "?project="+ $(this).val() ;
+    });
+  </script>
+<%else%>
+
+New
+  <%=display_standard_table([current_user.as_json], [current_user])%>
+  Progress
+  <%=display_standard_table([current_user.as_json],[current_user], 'Progress')%>
+  Done
+  <%=display_standard_table([current_user.as_json], [current_user],'Done')%>
+
+<%end%>
+
+

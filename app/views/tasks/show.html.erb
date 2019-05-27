@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @task.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @task.description %>
+</p>
+
+<p>
+  <strong>Due date:</strong>
+  <%= @task.due_date %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @task.status %>
+</p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= @task.owner.email %>
+</p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @project.name %>
+</p>
+
+
+<%= link_to 'Show', project_task_path(@project, @task) %> |
+<%= link_to 'Edit', edit_project_task_path(@project, @task) %>
