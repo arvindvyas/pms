@@ -10,8 +10,9 @@ module ProjectsHelper
 	 tbody = content_tag :tbody do
 	  collection.collect { |elem|
 	    content_tag :tr do
-	    	tasks =  elem.tasks.where(status: status)
-	      tasks.uniq.collect { |column| 
+	    	tasks =  elem.tasks.to_a.select{|s| s.status == status}
+	    	next if tasks.blank?
+	      tasks.collect { |column| 
 	        concat content_tag(:td, column.try(:name))
 	        if current_user.role == 'developer'
 	          concat content_tag(:td, "#{link_to 'EDIT', edit_project_task_path(column.project_id, column)}".html_safe)
@@ -36,7 +37,8 @@ module ProjectsHelper
 	 tbody = content_tag :tbody do
 	  collection.collect { |elem|
 	    content_tag :tr do
-	    	tasks =  elem.tasks.where(status: status)
+	    	tasks =  elem.tasks.to_a.select{|s| s.status == status}
+	    	next if tasks.blank?
 	      tasks.uniq.collect { |column| 
 	        concat content_tag(:td, column.try(:name))
 	      }.to_s.html_safe

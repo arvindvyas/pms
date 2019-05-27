@@ -66,6 +66,8 @@ class ProjectsController < ApplicationController
 
   def dashboard
     @projects = current_user.projects
+    project_id = params[:project].present? ? params[:project] : 1
+    @graph_data = Task.includes(:project).where(project_id: project_id).select("status, project_id").group_by(&:status).collect{|k , v | [k, v.count]}
   end
 
   private
