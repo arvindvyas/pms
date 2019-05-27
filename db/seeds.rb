@@ -13,3 +13,7 @@
   User.create!(email: "developer#{i}@gmail.com", role: 'developer', password: 'password', password_confirmation: 'password')
 end
 puts "developer created"
+(0..1).each do |i|
+  User.create!(email: "admin#{i}@gmail.com", role: 'developer', password: 'password', password_confirmation: 'password')
+end
+puts "admin created"
